@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     //1.notification channel
     //2.notification builder
     //3.notification manager
-    private static final String CHANNEL_ID="diponkar_saha";
+    public static final String CHANNEL_ID="diponkar_saha";
     private static final String CHANNEL_Name="diponkar saha";
     private static final String CHANNEL_DESC="diponkar_saha_notification";
 
@@ -76,20 +76,10 @@ public class MainActivity extends AppCompatActivity {
                            // textview.setText("Token"+token);
 
                         } else{
-                            //textview.setText("token not generate");
-                            //textview.setText(task.getException().getMessage());
 
                         }
                     }
                 });
-
-
-        /* button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayNotification();
-            }
-        });*/
 
     }
     private void createUser(){
@@ -153,9 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             progressBar.setVisibility(View.INVISIBLE);
-                            // If sign in fails, display a message to the user.
-                           // Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                              Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
                         }
@@ -164,20 +152,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mAuth.getCurrentUser()!=null) {
+           startProfileActivity();
+        }
+    }
 
     private void startProfileActivity(){
         Intent intent =new Intent(this,ProfileActivity.class);
         startActivity(intent);
 
     }
-    private void displayNotification(){
-        NotificationCompat.Builder builder=new NotificationCompat.Builder(this,CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_baseline_message_24)
-                .setContentTitle("Hurry its working")
-                .setContentText("wellcome")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        NotificationManagerCompat notificationManagerCompat=
-                NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(1,builder.build());
-    }
+
 }
